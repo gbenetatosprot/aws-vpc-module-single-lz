@@ -1,7 +1,7 @@
 locals {
-  len_public_subnets      = max(length(var.public_subnets), length(var.public_subnet_ipv6_prefixes))
-  len_private_subnets     = max(length(var.private_subnets), length(var.private_subnet_ipv6_prefixes))
-  len_staging_subnets    = max(length(var.database_subnets), length(var.database_subnet_ipv6_prefixes))
+  len_public_subnets      = max(length(var.public_subnets))
+  len_private_subnets     = max(length(var.private_subnets))
+  len_staging_subnets    = max(length(var.staging_subnets))
 
   max_subnet_length = max(
     local.len_private_subnets,
