@@ -257,11 +257,8 @@ resource "aws_route_table" "private" {
   tags = 
     {
       "Name" = "Private-Subnet-Rt"
-      )
-    },
-    var.tags,
-    var.private_route_table_tags,
-  )
+      
+    }
 }
 
 resource "aws_route_table_association" "private" {
