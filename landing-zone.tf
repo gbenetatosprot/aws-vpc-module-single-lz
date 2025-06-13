@@ -24,5 +24,8 @@ module "vpc1" {
 
   tgw_share = true
 
+  ram_principals = [503659244423]
+  ram_share_arn = "arn:aws:ram:us-east-1:706210432878:resource-share/2bc59596-8389-403c-af75-7f15d4351770"
+
   create_staging_subnet_route_table = true
 }
