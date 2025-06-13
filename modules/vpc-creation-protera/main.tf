@@ -115,9 +115,11 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_route" "public_internet_gateway" {
-  count = local.create_public_subnets
-    && var.create_igw
-    && var.public_default_route ? local.num_public_route_tables : 0
+  count = (
+    local.create_public_subnets &&
+    var.create_igw &&
+    var.public_default_route
+  ) ? local.num_public_route_tables : 0
 
   route_table_id         = aws_route_table.public[count.index].id
   destination_cidr_block = "0.0.0.0/0"
@@ -416,11 +418,13 @@ resource "aws_route_table_association" "staging" {
 
 
 resource "aws_route" "staging_internet_gateway" {
-  count = local.create_staging_route_table
-    && var.create_igw
-    && var.create_staging_internet_gateway_route
-    && !var.create_staging_nat_gateway_route
-    && var.default_route_staging ? 1 : 0
+  count = (
+    local.create_staging_route_table &&
+    var.create_igw &&
+    var.create_staging_internet_gateway_route &&
+    !var.create_staging_nat_gateway_route &&
+    var.default_route_staging
+  ) ? 1 : 0
 
   route_table_id         = aws_route_table.staging[0].id
   destination_cidr_block = "0.0.0.0/0"
@@ -432,11 +436,13 @@ resource "aws_route" "staging_internet_gateway" {
 }
 
 resource "aws_route" "staging_nat_gateway" {
-  count = local.create_staging_route_table
-    && !var.create_staging_internet_gateway_route
-    && var.create_staging_nat_gateway_route
-    && var.enable_nat_gateway
-    && var.default_route_staging ? var.single_nat_gateway ? 1 : local.len_staging_subnets : 0
+  count = (
+    local.create_staging_route_table &&
+    !var.create_staging_internet_gateway_route &&
+    var.create_staging_nat_gateway_route &&
+    var.enable_nat_gateway &&
+    var.default_route_staging
+  ) ? (var.single_nat_gateway ? 1 : local.len_staging_subnets) : 0
 
   route_table_id         = element(aws_route_table.staging[*].id, count.index)
   destination_cidr_block = "0.0.0.0/0"
