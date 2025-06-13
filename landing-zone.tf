@@ -22,5 +22,7 @@ module "vpc1" {
   enable_dns_hostnames = true
   enable_dns_support   = true
 
+  tgw_share = true
+
   create_staging_subnet_route_table = true
 }

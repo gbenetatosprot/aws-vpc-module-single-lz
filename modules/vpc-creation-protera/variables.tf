@@ -702,3 +702,21 @@ variable "putin_khuylo" {
   type        = bool
   default     = true
 }
+
+variable "tgw_share" {
+  description = "Whether to enable the TGW sharing module"
+  type        = bool
+  default     = false
+}
+
+variable "ram_share_arn" {
+  description = "The RAM share ARN used for TGW attachment"
+  type        = string
+  default     = ""
+}
+
+variable "ram_principals" {
+  description = "List of AWS account IDs to share the TGW with"
+  type        = list(string)
+  default     = []
+}
