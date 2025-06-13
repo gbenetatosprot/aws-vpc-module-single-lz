@@ -17,7 +17,7 @@ module "vpc1" {
   staging_subnet_names = ["Staging-Subnet-AZ1-PRV"]
 
   enable_nat_gateway = false
-  enable_vpn_gateway = false
+
 
   enable_dns_hostnames = true
   enable_dns_support   = true
