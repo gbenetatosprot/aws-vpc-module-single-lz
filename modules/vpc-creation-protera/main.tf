@@ -250,15 +250,12 @@ resource "aws_subnet" "private" {
 
 
 resource "aws_route_table" "private" {
-  count = 1
-
+  count  = 1
   vpc_id = local.vpc_id
 
-  tags = 
-    {
-      "Name" = "Private-Subnet-Rt"
-      
-    }
+  tags = {
+    Name = "Private-Subnet-Rt"
+  }
 }
 
 resource "aws_route_table_association" "private" {
