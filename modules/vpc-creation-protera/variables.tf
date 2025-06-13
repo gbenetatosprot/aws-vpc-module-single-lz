@@ -126,6 +126,12 @@ variable "create_multiple_public_route_tables" {
   default     = false
 }
 
+variable "public_default_route" {
+  description = "Adds default route to IGW"
+  type        = bool
+  default     = false
+}
+
 variable "map_public_ip_on_launch" {
   description = "Specify true to indicate that instances launched into the subnet should be assigned a public IP address. Default is `false`"
   type        = bool
@@ -336,6 +342,11 @@ variable "staging_subnet_enable_resource_name_dns_a_record_on_launch" {
   default     = false
 }
 
+variable "default_route_staging" {
+  description = "Indicates whether to respond to DNS queries for instance hostnames with DNS A records. Default: `false`"
+  type        = bool
+  default     = false
+}
 
 variable "staging_subnet_private_dns_hostname_type_on_launch" {
   description = "The type of hostnames to assign to instances in the subnet at launch. For IPv6-only subnets, an instance DNS name must be based on the instance ID. For dual-stack and IPv4-only subnets, you can specify whether DNS names use the instance IPv4 address or the instance ID. Valid values: `ip-name`, `resource-name`"
