@@ -56,4 +56,5 @@ module "vpc2" {
   ram_share_arn = "arn:aws:ram:eu-west-3:706210432878:resource-share/a2a577e7-30a4-4dad-b8c7-f14f62767e29"
 
   create_staging_subnet_route_table = true
+  depends_on = [module.vpc1]
 }
