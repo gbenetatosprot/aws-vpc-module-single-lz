@@ -587,3 +587,37 @@ resource "aws_route" "private_nat_gateway" {
     create = "5m"
   }
 }
+
+################################################################################
+# Route Table with TGW
+################################################################################
+
+resource "aws_route" "public-to-tgw" {
+  count = (
+    local.create_public_subnets &&
+    var.attachment_creation
+  ) ? local.num_public_route_tables : 0
+
+  route_table_id         = aws_route_table.public[count.index].id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = data.aws_ec2_transit_gateway.shared.id
+
+  timeouts {
+    create = "5m"
+  }
+}
+
+resource "aws_route" "private-to-tgw" {
+  count = (
+    local.create_private_subnets &&
+    var.attachment_creation
+  ) ? local.num_private_route_tables : 0
+
+  route_table_id         = aws_route_table.private[count.index].id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = data.aws_ec2_transit_gateway.shared.id
+
+  timeouts {
+    create = "5m"
+  }
+}
