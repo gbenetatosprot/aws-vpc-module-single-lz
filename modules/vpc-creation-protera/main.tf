@@ -609,10 +609,8 @@ resource "aws_route" "public-to-tgw" {
 }
 
 resource "aws_route" "private-to-tgw" {
-  count = (
-    local.create_private_subnets &&
-    var.attachment_creation
-  ) ? local.num_private_route_tables : 0
+
+  count = var.attachment_creation ? 1 : 0
 
   route_table_id         = aws_route_table.private[count.index].id
   destination_cidr_block = "0.0.0.0/0"
