@@ -720,3 +720,9 @@ variable "ram_principals" {
   type        = list(string)
   default     = []
 }
+
+variable "tgw_arn" {
+  description = "The TGW ARN to associate with the RAM share"
+  type        = string
+  default     = ""
+}
