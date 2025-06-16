@@ -27,17 +27,20 @@ data "aws_ec2_transit_gateway" "shared" {
   depends_on = [aws_route_table_association.private]
 }
 
-resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-spoke" {
-  count = (
-    var.attachment_creation &&
-    try(length(data.aws_ec2_transit_gateway.shared.id) > 0, false)
-  ) ? 1 : 0
+locals {
+  tgw_id_available = can(data.aws_ec2_transit_gateway.shared.id)
+}
 
-  subnet_ids                                            = aws_subnet.private[*].id
-  transit_gateway_id                                    = data.aws_ec2_transit_gateway.shared.id
-  transit_gateway_default_route_table_association       = false
-  transit_gateway_default_route_table_propagation       = false
-  vpc_id                                                = aws_vpc.this[0].id
+resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-spoke" {
+  count = var.attachment_creation && local.tgw_id_available ? 1 : 0
+
+  subnet_ids      = aws_subnet.private[*].id
+  vpc_id          = aws_vpc.this[0].id
+  transit_gateway_id = data.aws_ec2_transit_gateway.shared.id
+
+  transit_gateway_default_route_table_association = false
+  transit_gateway_default_route_table_propagation = false
+  appliance_mode_support                          = "enable"
 
   tags = {
     Name = "securityVPC-Attach"
