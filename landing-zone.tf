@@ -7,7 +7,7 @@ module "vpc1" {
 
   name            = "bene-vpc-1"
   cidr            = "10.160.10.0/23"
-  azs             = ["us-east-1a", "us-east-1b"]
+  azs             = ["eu-west-3a", "eu-west-3b"]
   private_subnets = ["10.160.10.0/25", "10.160.11.0/25"]
   public_subnets  = ["10.160.10.128/26", "10.160.11.128/26"]
   staging_subnets = ["10.160.10.192/27"]
@@ -25,7 +25,7 @@ module "vpc1" {
   tgw_share = true
 
   ram_principals = [503659244423]
-  ram_share_arn = "arn:aws:ram:us-east-1:706210432878:resource-share/2bc59596-8389-403c-af75-7f15d4351770"
+  ram_share_arn = "arn:aws:ram:eu-west-3:706210432878:resource-share/a2a577e7-30a4-4dad-b8c7-f14f62767e29"
 
   create_staging_subnet_route_table = true
 }
@@ -35,7 +35,7 @@ module "vpc2" {
 
   name            = "bene-vpc-2"
   cidr            = "192.168.50.0/23"
-  azs             = ["us-east-1a", "us-east-1b"]
+  azs             = ["eu-west-3a", "eu-west-3b"]
   private_subnets = ["192.168.50.0/25", "192.168.51.0/25"]
   public_subnets  = ["192.168.50.128/26", "192.168.51.128/26"]
   staging_subnets = ["192.168.50.192/27"]
@@ -53,7 +53,7 @@ module "vpc2" {
   tgw_share = true
 
   ram_principals = [503659244423]
-  ram_share_arn = "arn:aws:ram:us-east-1:706210432878:resource-share/2bc59596-8389-403c-af75-7f15d4351770"
+  ram_share_arn = "arn:aws:ram:eu-west-3:706210432878:resource-share/a2a577e7-30a4-4dad-b8c7-f14f62767e29"
 
   create_staging_subnet_route_table = true
 }
