@@ -32,10 +32,11 @@ locals {
 }
 
 resource "aws_ec2_transit_gateway_vpc_attachment" "tgw-spoke" {
-  count = var.attachment_creation && local.tgw_id_available ? 1 : 0
+  count = var.attachment_creation ? 1 : 0
 
   subnet_ids      = aws_subnet.private[*].id
   vpc_id          = aws_vpc.this[0].id
+
   transit_gateway_id = data.aws_ec2_transit_gateway.shared.id
 
   transit_gateway_default_route_table_association = false
