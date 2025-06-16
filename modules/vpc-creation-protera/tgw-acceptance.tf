@@ -1,32 +1,20 @@
-data "aws_ec2_transit_gateway" "shared" {
-  filter {
-    name   = "state"
-    values = ["available"]
-  }
-}
+module "tgw_peer" {
+  count = (
+    var.tgw_share &&
+    var.ram_share_arn != "" &&
+    length(var.ram_principals) > 0
+  ) ? 1 : 0
 
-resource "aws_ram_resource_association" "tgw" {
-  count = var.tgw_share && var.ram_share_arn != "" ? 1 : 0
+  source = "terraform-aws-modules/transit-gateway/aws"
 
-  resource_arn       = data.aws_ec2_transit_gateway.shared.id
-  resource_share_arn = var.ram_share_arn
+  name            = "shared-tgw"
+  description     = "My TGW shared with several other AWS accounts"
 
-  lifecycle {
-    ignore_changes = [resource_share_arn]
-  }
-}
+  create_tgw             = false
+  share_tgw              = true
+  ram_resource_share_arn = var.ram_share_arn
+  enable_auto_accept_shared_attachments = true
+  ram_allow_external_principals         = true
+  ram_principals                        = var.ram_principals
 
-resource "aws_ram_principal_association" "principals" {
-  for_each = (
-    var.tgw_share && var.ram_share_arn != "" && length(var.ram_principals) > 0
-    ? toset(var.ram_principals)
-    : toset([])
-  )
-
-  principal          = each.key
-  resource_share_arn = var.ram_share_arn
-
-  lifecycle {
-    ignore_changes = [resource_share_arn]
-  }
 }

@@ -50,7 +50,7 @@ module "vpc2" {
   enable_dns_hostnames = true
   enable_dns_support   = true
 
-  tgw_share = true
+  tgw_share = false
 
   ram_principals = [503659244423]
   ram_share_arn = "arn:aws:ram:eu-west-3:706210432878:resource-share/a2a577e7-30a4-4dad-b8c7-f14f62767e29"
