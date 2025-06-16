@@ -605,6 +605,7 @@ resource "aws_route" "public-to-tgw" {
   timeouts {
     create = "5m"
   }
+  depends_on = [aws_ec2_transit_gateway_vpc_attachment.tgw-spoke]
 }
 
 resource "aws_route" "private-to-tgw" {
@@ -620,4 +621,5 @@ resource "aws_route" "private-to-tgw" {
   timeouts {
     create = "5m"
   }
+  depends_on = [aws_ec2_transit_gateway_vpc_attachment.tgw-spoke]
 }
