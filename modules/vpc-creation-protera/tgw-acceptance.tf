@@ -20,7 +20,7 @@ resource "aws_ram_principal_association" "principals" {
   for_each = (
     var.tgw_share && var.ram_share_arn != "" && length(var.ram_principals) > 0
     ? toset(var.ram_principals)
-    : {}
+    : toset([])
   )
 
   principal          = each.key
